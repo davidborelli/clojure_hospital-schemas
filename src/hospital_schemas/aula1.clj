@@ -60,4 +60,11 @@
 
 ; Agora conseguimos o erro em tempo de *execução* que diz
 ; que o valor passado como parâmetro não condiz com o schema Long
-(testa-uso-de-pacientes)
+;(testa-uso-de-pacientes)
+
+(s/defn novo-paciente
+  [id :- Long, nome :- s/Str]
+  {:id id, :nome nome})
+
+(pprint (novo-paciente 15 "David Borelli"))
+;(pprint (novo-paciente "David Borelli" 15))
