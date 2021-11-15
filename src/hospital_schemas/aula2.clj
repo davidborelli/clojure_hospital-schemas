@@ -48,3 +48,15 @@
   {:id id, :nome nome})
 
 (pprint (novo-paciente 15 "David Borelli"))
+
+
+
+; Função pura simples, fácil de testar
+(defn estritamente-positivo? [x]
+  (> x 0))
+(def EstritamentePositivo (s/pred estritamente-positivo? 'estritamente-positivo))
+;(def EstritamentePositivo (s/pred estritamente-positivo?))
+
+(pprint (s/validate EstritamentePositivo 15))
+;(pprint (s/validate EstritamentePositivo 0))
+;(pprint (s/validate EstritamentePositivo -15))
