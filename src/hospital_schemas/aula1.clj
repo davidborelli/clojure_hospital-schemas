@@ -1,5 +1,6 @@
 (ns hospital_schemas.aula1
-  (:use clojure.pprint))
+  (:use clojure.pprint)
+  (:require [schema.core :as s]))
 
 (defn adiciona-paciente
   [pacientes, paciente]
@@ -40,3 +41,23 @@
 
 (testa-uso-de-pacientes)
 
+(pprint (s/validate Long 15))
+;(pprint (s/validate Long "David"))
+;(pprint (s/validate Long [15, 13]))
+
+(s/set-fn-validation! true)
+
+(s/defn teste-simples
+  [x :- Long]
+  (println x))
+
+(teste-simples 30)
+;(teste-simples "david")
+
+(s/defn imprime-relatorio-de-paciente
+  [visitas, paciente :- Long]
+  (println "Visitas do paciente" paciente "são" (get visitas paciente)))
+
+; Agora conseguimos o erro em tempo de *execução* que diz
+; que o valor passado como parâmetro não condiz com o schema Long
+(testa-uso-de-pacientes)
