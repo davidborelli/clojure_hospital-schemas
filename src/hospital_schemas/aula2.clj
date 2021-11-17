@@ -60,3 +60,22 @@
 (pprint (s/validate EstritamentePositivo 15))
 ;(pprint (s/validate EstritamentePositivo 0))
 ;(pprint (s/validate EstritamentePositivo -15))
+
+(def Paciente
+  "Schema de um paciente"
+  { :id (s/constrained s/Int pos?), :nome s/Str })
+; é por isso que é importante conhecer bem a documentação
+; já existe pos? e tbm pos-int implementado
+; UMA DICA: Sempre olhar documentação
+
+(pprint (s/validate Paciente { :id 15, :nome "Guilherme" }))
+;(pprint (s/validate Paciente { :id -15, :nome "Guilherme" }))
+;(pprint (s/validate Paciente { :id 0, :nome "Guilherme" }))
+
+(def Paciente
+  "Schema de um paciente"
+  { :id (s/constrained s/Int #(> % 0) 'inteiro-estritamente-possitivo), :nome s/Str })
+; Usar lambida não é tão interessante pois na mensagem de erro, é apresentado um nome
+; aleatório de função anônima, é bom evitar, parece uma péssima prática
+
+(pprint (s/validate Paciente { :id 1, :nome "David" }))
