@@ -41,6 +41,39 @@
 (pprint (novo-pedido (novo-paciente 15, "David Borelli"), 15.33, :raio-x))
 ;(pprint (novo-pedido (novo-paciente 15, "David Borelli"), -15.33, :raio-x))
 
+(pprint "-----------------------------------------------------")
+
+(def Numeros [s/Num])
+(pprint (s/validate Numeros [15]))
+(pprint (s/validate Numeros [15, 13]))
+(pprint (s/validate Numeros [15, 13, 123, 132, 321, 12.23]))
+(pprint (s/validate Numeros [0]))
+; nil não é número, não faz sentido
+; (pprint (s/validate Numeros [nil]))
+(pprint (s/validate Numeros []))
+(pprint (s/validate Numeros nil))
+
+; nil não é s/Num
+;(pprint (s/validate s/Num nil))
+; nil é [s/Num]
+(pprint (s/validate [s/Num] nil))
+
+(def Plano [s/Keyword])
+(pprint (s/validate Plano [:raio-x]))
+
+(def Paciente
+  {:id PosInt, :nome s/Str, :plano Plano})
+
+(pprint (s/validate Paciente {:id 15, :nome "David", :plano [:raio-x, :ultrasom]}))
+(pprint (s/validate Paciente {:id 15, :nome "David", :plano [:raio-x]}))
+(pprint (s/validate Paciente {:id 15, :nome "David", :plano []}))
+(pprint (s/validate Paciente {:id 15, :nome "David", :plano nil}))
+; plano é uma keyword obrigatória no mapa, mas ela pode ter um valor vazio (nil)
+; (pprint (s/validate Paciente {:id 15, :nome "David"}))
+
+
+
+
 
 
 
